@@ -1,5 +1,5 @@
 # spyfs
-Spy FS - The purpose of this tool is to analyze which files in a folder are actually useful and which are not. With this information you can make duplicate of that folder with only those files which are required. This had been created to create an extremely small and portable version of python, for purpose of running youtube-dl
+Spy FS - A tool to create a virtual copy of a folder and spy on that folder, to know which files are read and at what locations (file offset ranges). The purpose of this tool is to analyze which files in a folder are actually useful and which are not. With this information you can make duplicate of that folder with only those files which are required. This had been created to create an extremely small and portable version of python, for purpose of running youtube-dl
 
 
 # Why is it called SpyFS ? What does it do ? How does it work ?
@@ -26,6 +26,10 @@ Simple, we removed files from python runtime which were not required by the appl
 
 So this was why SpyFS was created. You might use it for some other reason. Feel free to use it whichever way you like, it is open source :D
 
+# Runtime requirements
+1. You need java 7 to run this
+2. You also need to download and install pismo file mount, which is available here : http://www.pismotechnic.com/download/
+3. As of now this works only on windows. Both 32-bit and 64-bit environmens are supported however. To make this thing to work on linux or mac, you will have to build jpfm from sources. Untested libraries for these platforms are also available, but they do not work so easily. 
 
 # Usage
 java -jar spyfs.jar <param1-source> <param2-storeTo> <param3-virtual>
