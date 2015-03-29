@@ -70,4 +70,10 @@
     nbproject/build-impl.xml file. 
 
     -->
+    <target name="-post-jar">
+        <echo>Copying native libraries</echo>
+        <copy todir="${dist.jar.dir}/lib/">
+            <fileset dir="resources" includes="**"/>
+        </copy>
+    </target>
 </project>

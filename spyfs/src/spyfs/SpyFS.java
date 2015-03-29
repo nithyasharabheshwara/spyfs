@@ -94,7 +94,7 @@ public class SpyFS {
         System.out.println();
         
         String source = "J:\\Python27sa"; 
-        String storeTo = "F:\\neembuu\\resources\\minipython\\win";
+        String storeTo = "F:\\neembuu\\resources\\minipython\\win2";
         String virtual = "F:\\c";
         
         if(args.length >= 3){
