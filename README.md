@@ -62,7 +62,7 @@ There are many tricks used for this process. I will describe the steps here.
   10. Test the app by running it and make sure everything is ok.
   11. Now we are ready to run spyfs on this.
   12. Run spyfs and make a virtual copy of this folder
-  13. Run the app from the virtual folder
+  13. Run the app from the virtual folder. **Use commandline**, avoid opening the virtual folder. If you open the virtual folder, it would create an illusion to spyfs. SpyFS might add more files because when you open the folder, spyfs thinks the application opened those folders/files. So avoid visiting the virtual folder and polluting the spyfs sample. Use command line and invoke the exe, that is it. Do not touch anything else, because whatever you touch will be added to final distribution.
   14. **Use the app throughly and make sure you don't miss any feature.** This step is important, because your program would crash in client side if it uses some functionality whoes classfiles were stripped off by spyfs.
   15. Using spyfs ui, make a copy of this virtual folder
   16. Now you have a ultra small version of your java application with java runtime
