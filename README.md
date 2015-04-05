@@ -44,3 +44,33 @@ java -jar spyfs.jar
 
 A javafx based user interface will help you use SpyFS.
 
+# Java in 5 MB
+Using SpyFS you can distribute a javafx application, which are (less than) 5MB in size !
+Yes this is possible and this is insane small size. Even modular java 9 might not be able to beat this !
+BTW, you may download the sample 5MB application from spyfs git. It is a 64-bit app, so it will not run on 32-bit OSes.
+
+There are many tricks used for this process. I will describe the steps here.
+  1. Unzip rt.jar and all other java runtime bootstrap jar files in a single folder, let us call it **rt** . To name all of them access-bridge-64.jar;charsets.jar;cldrdata.jar;dnsns.jar;jaccess.jar;javaws.jar;jce.jar;jfr.jar;jfxrt.jar;jfxswt.jar;jsse.jar;localedata.jar;local_policy.jar;management-agent.jar;nashorn.jar;plugin.jar;resources.jar;rt.jar;sunec.jar;sunjce_provider.jar;sunmscapi.jar;sunpkcs11.jar;US_export_policy.jar;zipfs.jar
+  2. Now package your java application as a native image. Use javafx native packing tool for this purpose.
+  3. Typically the application folder contains a folder named **app** , a folder named **runtime**, an executable which runs your application, etc.
+  4. Copy **rt** which you prepared in step1, inside this application folder.
+  5. Inside app\ folder you will find a **cfg** file. Example <application folder>\app\NT.cfg ; edit this file.
+  6. Add following lines 
+  7. jvmarg.1=-Xbootclasspath:$APPDIR\rt
+  8. jvmarg.2=-Djava.ext.dirs=
+  9. These two lines force java to use classes from the rt folder which we created. When the app is run, it will use only a very small portion of classes than 10000000s of classes which are present in jre. SpyFS can detect these and save only these. This makes it possible to package our java application into insanely small size.
+  10. Test the app by running it and make sure everything is ok.
+  11. Now we are ready to run spyfs on this.
+  12. Run spyfs and make a virtual copy of this folder
+  13. Run the app from the virtual folder
+  14. **Use the app throughly and make sure you don't miss any feature.** This step is important, because your program would crash in client side if it uses some functionality whoes classfiles were stripped off by spyfs.
+  15. Using spyfs ui, make a copy of this virtual folder
+  16. Now you have a ultra small version of your java application with java runtime
+  17. Compress this using the tool or your choice or make a setup out of it.
+  18. After compression, the size of the application may go as low as 3MB ! For UI application made using javafx, the minimum size would be around 5MB ! 
+
+  
+
+
+
+
