@@ -16,6 +16,7 @@
 package spyfs;
 
 import java.net.URL;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 import javafx.application.Platform;
@@ -95,6 +96,7 @@ public class UIController implements Initializable {
         try{
             GenericChooser chooser = file?GenericChooser.newFileC():GenericChooser.newDirectoryC();
             chooser.setTitle("Choose "+(file?"File":"Directory"));
+            chooser.setInitialDirectory(initPath);
             String s = chooser.show(stage);
             c2.accept(s);
             tf.setText(s);

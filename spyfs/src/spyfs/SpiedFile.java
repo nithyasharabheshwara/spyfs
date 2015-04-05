@@ -152,8 +152,12 @@ public class SpiedFile implements RealFile {
             }
             Files.copy(Paths.get(rf.getSourceFile()), dest,StandardCopyOption.REPLACE_EXISTING);
         }else if(opened){// the file was just opened, but not read
-            if(!Files.exists(dest))
+            if(!Files.exists(dest)){
+                if(!Files.exists(dest.getParent())){
+                    Files.createDirectories(dest.getParent());
+                }
                 Files.createFile(dest);
+            }
         }
     }
 

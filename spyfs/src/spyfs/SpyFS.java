@@ -56,8 +56,8 @@ public class SpyFS{
     public static SpyFSController work(final Settings s,Consumer<String> cntr)throws Exception{
         
         final SpyFS fs = new SpyFS(Paths.get(s.destinationPath()));
+        deleteC(Paths.get(s.destinationPath()));
         fs.fill(Paths.get(s.sourcePath()),cntr);
-
         MountListener.WaitingMountListener l = new MountListener.WaitingMountListener();
 
         final Mount mount = Mounts.mount(new MountParamsBuilder()
@@ -95,6 +95,29 @@ public class SpyFS{
             @Override public long totalDirectories() {return fs.totalDirectories;}
             
         };
+    }
+    
+    private static void deleteC(Path c){
+        System.out.println("Clearing "+c);
+        try{
+            Files.walkFileTree(c, new FileVisitor<Path>() {
+                @Override public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {return FileVisitResult.CONTINUE;}
+                @Override public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+                    Files.delete(file); 
+                    return FileVisitResult.CONTINUE;
+                }
+                @Override public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
+                    return FileVisitResult.CONTINUE;
+                }
+                @Override public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                    if(dir!=c) // don't delete root
+                        Files.delete(dir); 
+                    return FileVisitResult.CONTINUE;
+                }
+            });
+        }catch(Exception a){
+            a.printStackTrace();
+        }
     }
 
     private void fill(final Path p,final Consumer<String> cx) throws IOException {
