@@ -35,7 +35,8 @@ public class A extends Application {
     private final Rus r;
 
     public A() {
-        r = Rusila.create(Paths.get("java.home.path").resolve(".spfs"));
+        r = Rusila.create(Paths.get(
+                System.getProperty("java.home.path")).resolve(".spfs"));
     }
     
     FXMLLoader fxmll;
